@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Cam Velucci Photography — corporate
+   Taken from Corporate Landing Page v3. Ink and paper carry the page;
+   vermilion is the single accent on light, brass its counterpart on dark.
+   Corners are square and structure comes from 1px rules, not shadows.
+   --------------------------------------------------------------- */
+:root {
+  --ink: #111111;
+  --paper: #f5f1ea;
+  --vermilion: #b8401d;
+  --vermilion-hover: #9e3517;
+  --brass: #b9a27a;
+  --body-ink: #45423d;
+  --muted: #6a6660;
+  --rule: #d9d3c8;
+  --mist: #e4ded3;        /* light text on the dark bands */
+  --stone: #9a958c;       /* placeholders, footer small print */
+  --ink-rule: #2a2926;    /* hairlines on ink */
+  --frame: #eae5dc;       /* an empty photo frame */
+  --selection: #e6cfc4;
+
+  --gutter: clamp(20px, 5vw, 56px);
+  --section: clamp(80px, 10vw, 144px);
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-vermilion: var(--vermilion);
+  --color-vermilion-hover: var(--vermilion-hover);
+  --color-brass: var(--brass);
+  --color-body: var(--body-ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-mist: var(--mist);
+  --color-stone: var(--stone);
+  --color-ink-rule: var(--ink-rule);
+  --color-frame: var(--frame);
+
+  --font-serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-lato), system-ui, sans-serif;
+  --font-quote: var(--font-cormorant), Georgia, serif;
+
+  --ease-settle: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/*
+ * Element defaults sit in @layer base. Unlayered CSS outranks every layered
+ * rule, so leaving them bare would let `h2 { color }` beat a utility class.
+ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-lato), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--selection);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-source-serif), Georgia, serif;
+    font-weight: 300;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  input,
+  textarea,
+  button {
+    font: inherit;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--stone);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--vermilion);
+    outline-offset: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
