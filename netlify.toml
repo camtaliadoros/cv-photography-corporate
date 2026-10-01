@@ -6,8 +6,13 @@
   NODE_VERSION = "22"
   # NEXT_PUBLIC_* values are inlined into the client bundle by design, but
   # Netlify's secrets scanner sees them in the build output and fails the
-  # deploy. These are public identifiers, not secrets.
-  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SANITY_PROJECT_ID,NEXT_PUBLIC_SANITY_DATASET,NEXT_PUBLIC_PLAUSIBLE_DOMAIN"
+  # deploy. These are public identifiers, not secrets — and the notify address
+  # is the same hello@ address printed on the page.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SANITY_PROJECT_ID,NEXT_PUBLIC_SANITY_DATASET,NEXT_PUBLIC_PLAUSIBLE_DOMAIN,ENQUIRY_NOTIFY_EMAIL"
+  # Turbopack's persistent build cache records env values. It's kept between
+  # builds but never deployed, so the scan has nothing to protect there. Every
+  # other path (pages, chunks, functions) is still scanned.
+  SECRETS_SCAN_OMIT_PATHS = ".netlify/.next/cache/**"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
