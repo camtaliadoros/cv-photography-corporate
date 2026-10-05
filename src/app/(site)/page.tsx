@@ -127,7 +127,7 @@ export default async function HomePageRoute() {
         <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-wrap items-end justify-between gap-8 px-(--gutter) pb-[clamp(40px,6vw,64px)] max-[720px]:pb-[104px]">
           <div className="flex max-w-[760px] flex-col gap-[22px]">
             <Eyebrow tone="brass">{hero.eyebrow}</Eyebrow>
-            <h1 className="text-[clamp(40px,6vw,78px)] leading-[1.04] tracking-[-0.02em] text-paper">
+            <h1 className="text-[clamp(30px,3.8vw,50px)] leading-[1.1] tracking-[-0.02em] text-paper">
               {hero.heading}
             </h1>
             <p className="max-w-[50ch] font-serif text-[clamp(17px,1.4vw,20px)] leading-[1.6] font-light text-mist">
