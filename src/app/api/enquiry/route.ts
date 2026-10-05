@@ -71,10 +71,12 @@ type Enquiry = Required<Omit<EnquiryPayload, "website">>;
 /**
  * Writes to the same Enquiries table as the family site, tagged by Source.
  *
- * Airtable rejects the whole record if one field name is unknown, and the
- * corporate form sends a Company the family table may not have. Rather than
- * lose the enquiry, drop whichever field it names and try again; if it still
- * fails, fall back to the core fields with everything folded into Message.
+ * Airtable rejects the whole record if one field name is unknown, or if a
+ * select value isn't an existing option and the token can't create it
+ * ("Corporate event" / "Corporate website" aren't options until the first
+ * successful typecast adds them). Rather than lose the enquiry, drop whichever
+ * field it names and try again; if it still fails, fall back to the core
+ * fields with everything folded into Message.
  */
 async function writeToAirtable(data: Enquiry): Promise<{ ok: boolean }> {
   const token = process.env.AIRTABLE_TOKEN;
@@ -86,22 +88,23 @@ async function writeToAirtable(data: Enquiry): Promise<{ ok: boolean }> {
   }
 
   const [firstName, ...rest] = data.name.split(/\s+/);
-  const fullMessage = [
-    `Company: ${data.company}`,
-    `Date & location: ${data.when || "—"}`,
-    "",
-    data.message || "(no details given)",
-  ].join("\n");
+  const details = data.message || "(no details given)";
 
   const core: Record<string, string> = {
     "First Name": firstName,
     "Last Name": rest.join(" "),
     Email: data.email,
-    Message: fullMessage,
+    Message: [
+      `Company: ${data.company}`,
+      `Date & location: ${data.when || "—"}`,
+      "",
+      details,
+    ].join("\n"),
     "Date received": new Date().toISOString(),
   };
   let fields: Record<string, string> = {
     ...core,
+    Message: details,
     Company: data.company,
     Location: data.when,
     "Session Type": "Corporate event",
@@ -116,7 +119,7 @@ async function writeToAirtable(data: Enquiry): Promise<{ ok: boolean }> {
     });
 
   try {
-    for (let attempt = 0; attempt < 5; attempt++) {
+    for (let attempt = 0; attempt < 6; attempt++) {
       const res = await post(fields);
       if (res.ok) return { ok: true };
 
@@ -126,6 +129,16 @@ async function writeToAirtable(data: Enquiry): Promise<{ ok: boolean }> {
         console.warn(`Airtable has no "${unknown}" field — retrying without it`);
         fields = { ...fields };
         delete fields[unknown];
+        continue;
+      }
+
+      const badOption = error.includes("INVALID_MULTIPLE_CHOICE_OPTIONS")
+        ? Object.keys(fields).find((k) => !(k in core) && error.includes(fields[k]))
+        : undefined;
+      if (badOption) {
+        console.warn(`Airtable rejected "${fields[badOption]}" for ${badOption} — retrying without it`);
+        fields = { ...fields };
+        delete fields[badOption];
         continue;
       }
 

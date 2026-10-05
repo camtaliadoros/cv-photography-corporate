@@ -227,7 +227,7 @@ export default async function HomePageRoute() {
               <span className="font-quote text-[clamp(26px,2.6vw,34px)] text-paper/78 italic">
                 {details.priceLead}
               </span>
-              <span className="font-serif text-[clamp(96px,13vw,184px)] leading-[0.9] font-light tracking-[-0.04em] text-paper">
+              <span className="font-heading text-[clamp(96px,13vw,184px)] leading-[0.9] tracking-[-0.04em] text-paper">
                 {details.price}
               </span>
             </div>
@@ -251,7 +251,7 @@ export default async function HomePageRoute() {
                   <dt className="text-[10px] tracking-[0.26em] text-brass uppercase">{item.label}</dt>
                   <dd className="m-0 flex flex-col gap-2.5">
                     {item.headline && (
-                      <span className="font-serif text-[clamp(24px,2.4vw,30px)] leading-[1.2] font-light text-paper">
+                      <span className="font-heading text-[clamp(24px,2.4vw,30px)] leading-[1.2] text-paper">
                         {item.headline}
                       </span>
                     )}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Cormorant_Garamond, Lato, Source_Serif_4 } from "next/font/google";
+import { Cormorant_Garamond, Lato, Lora, Source_Serif_4 } from "next/font/google";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
@@ -9,7 +9,15 @@ import { heroFallbackPhoto, settingsContent } from "@/lib/content";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-// Source Serif 4 Light carries every heading and paragraph, roman and italic.
+// Lora carries the headings, as on the family site. It has no Light, so 400.
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-lora",
+  display: "swap",
+});
+
+// Source Serif 4 Light carries the body copy, roman and italic.
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   weight: ["300"],
@@ -67,7 +75,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en-GB"
-      className={`${sourceSerif.variable} ${lato.variable} ${cormorant.variable}`}
+      className={`${lora.variable} ${sourceSerif.variable} ${lato.variable} ${cormorant.variable}`}
     >
       <body>
         <a
