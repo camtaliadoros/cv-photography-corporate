@@ -7,7 +7,7 @@ const navLink =
 
 /**
  * Sits inside the hero on the home page, over the photograph; `solid` gives it
- * its own ink ground for pages without a hero. Work and About drop out below
+ * its own ink ground for pages without a hero. Work, Pricing and About drop out below
  * 720px, where the fixed mobile bar takes over as the way to enquire.
  */
 export function Header({ solid = false }: { solid?: boolean }) {
@@ -20,6 +20,9 @@ export function Header({ solid = false }: { solid?: boolean }) {
         <nav className="flex items-center gap-[clamp(20px,3vw,40px)]" aria-label="Main">
           <Link href="/#work" className={`${navLink} max-[720px]:hidden`}>
             Work
+          </Link>
+          <Link href="/#details" className={`${navLink} max-[720px]:hidden`}>
+            Pricing
           </Link>
           <Link href="/#about" className={`${navLink} max-[720px]:hidden`}>
             About
