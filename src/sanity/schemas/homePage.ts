@@ -14,6 +14,10 @@ export default defineType({
       defineField({ name: "heading", title: "Heading (H1)", type: "string" }),
       defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
       photo("image", "Hero photograph", false),
+      defineField({
+        ...photo("mobileImage", "Hero photograph (portrait, for phones)", false),
+        description: "Shown on phones and other portrait screens. Leave empty to use the main hero photograph.",
+      }),
       defineField({ name: "primaryCta", title: "Primary button", type: "string" }),
       defineField({ name: "secondaryCta", title: "Secondary link", type: "string" }),
     ]),

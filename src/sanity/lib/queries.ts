@@ -10,7 +10,7 @@ export const siteSettingsQuery = groq`*[_type == "siteSettings" && _id == "siteS
 
 export const homePageQuery = groq`*[_type == "homePage" && _id == "homePage"][0]{
   ...,
-  hero{ ..., image${photo} },
+  hero{ ..., image${photo}, mobileImage${photo} },
   about{ ..., portrait${photo} },
   work{
     ...,

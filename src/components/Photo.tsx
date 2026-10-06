@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityPhoto } from "@/sanity/lib/types";
 import type { FallbackPhoto } from "@/lib/content";
@@ -45,6 +45,46 @@ export function FillPhoto({
       blurDataURL={img.lqip}
       className={className}
     />
+  );
+}
+
+/**
+ * Art direction: `photo` everywhere, swapped for `portrait` when the viewport
+ * is taller than it is wide. A `<picture>` lets the browser fetch only the one
+ * it shows. Without a portrait it is just a FillPhoto.
+ */
+export function ArtDirectedPhoto({
+  photo,
+  portrait,
+  sizes,
+  priority,
+  className = "object-cover",
+}: Omit<FrameProps, "aspect"> & { portrait: AnyPhoto }) {
+  const img = resolve(photo);
+  const tall = resolve(portrait);
+  if (!img || !tall) {
+    return <FillPhoto photo={img ? photo : portrait} sizes={sizes} priority={priority} className={className} />;
+  }
+
+  // No preload here: a <link rel=preload> can't follow the media query, so it
+  // would fetch the landscape image on phones too.
+  const common = {
+    fill: true,
+    sizes,
+    className,
+    loading: priority ? ("eager" as const) : ("lazy" as const),
+    fetchPriority: priority ? ("high" as const) : undefined,
+  };
+  const {
+    props: { srcSet: portraitSet },
+  } = getImageProps({ ...common, src: tall.src, alt: tall.alt });
+  const { props } = getImageProps({ ...common, src: img.src, alt: img.alt });
+
+  return (
+    <picture>
+      <source media="(orientation: portrait)" srcSet={portraitSet} sizes={sizes} />
+      <img {...props} alt={props.alt} />
+    </picture>
   );
 }
 

@@ -3,7 +3,7 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { BracketLink, RuleLink } from "@/components/links";
 import { EventBlock, type EventView } from "@/components/EventBlock";
 import { EnquiryForm } from "@/components/EnquiryForm";
-import { FillPhoto, Frame } from "@/components/Photo";
+import { ArtDirectedPhoto, Frame } from "@/components/Photo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { homePageQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 import { HeroParallax } from "@/components/HeroParallax";
@@ -44,6 +44,7 @@ export default async function HomePageRoute() {
 
   const hero = { ...fb.hero, ...stripEmpty(page?.hero) };
   const heroImage = page?.hero?.image?.asset ? page.hero.image : heroFallbackPhoto;
+  const heroMobileImage = page?.hero?.mobileImage?.asset ? page.hero.mobileImage : undefined;
   const heroIntro = toPlainText(page?.hero?.intro) || fb.hero.intro;
 
   const whatIDo = {
@@ -114,7 +115,7 @@ export default async function HomePageRoute() {
         className="relative flex min-h-[clamp(620px,100vh,920px)] flex-col justify-between overflow-hidden bg-ink"
       >
         <HeroParallax>
-          <FillPhoto photo={heroImage} sizes="100vw" priority className="object-cover" />
+          <ArtDirectedPhoto photo={heroImage} portrait={heroMobileImage} sizes="100vw" priority />
         </HeroParallax>
         <div
           aria-hidden

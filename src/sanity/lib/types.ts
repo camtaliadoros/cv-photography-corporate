@@ -43,6 +43,7 @@ export interface HomePage {
     heading?: string;
     intro?: MaybeRichText;
     image?: SanityPhoto;
+    mobileImage?: SanityPhoto;
     primaryCta?: string;
     secondaryCta?: string;
   };
