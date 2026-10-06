@@ -1,4 +1,4 @@
-import { Frame, type AnyPhoto } from "./Photo";
+import { NaturalPhoto, type AnyPhoto } from "./Photo";
 
 export interface EventView {
   title: string;
@@ -10,23 +10,31 @@ export interface EventView {
 }
 
 /**
- * One event: a numbered headline row over a 4:3 lead frame beside two 2:3
- * details. Every other event flips the pair so the column stays uneven.
+ * One event: a numbered headline row over a lead photo beside two details, all
+ * at one shared height and shown uncropped. Every other event reverses the
+ * order so the column stays uneven.
  */
 export function EventBlock({ event, index }: { event: EventView; index: number }) {
   const flipped = index % 2 === 1;
-  const details = [event.details[0], event.details[1]];
-
-  const lead = (
-    <Frame photo={event.lead} aspect="aspect-[4/3]" sizes="(max-width: 760px) 100vw, 620px" />
-  );
-  const pair = (
-    <div className="grid min-w-0 grid-cols-2 gap-4">
-      {details.map((photo, i) => (
-        <Frame key={i} photo={photo} aspect="aspect-[2/3]" sizes="(max-width: 760px) 50vw, 300px" />
-      ))}
-    </div>
-  );
+  const photos = [
+    <NaturalPhoto
+      key="lead"
+      photo={event.lead}
+      fallbackRatio={4 / 3}
+      sizes="(max-width: 760px) 100vw, 620px"
+      className="max-md:basis-full max-md:!grow-0 md:basis-0"
+    />,
+    ...[event.details[0], event.details[1]].map((photo, i) => (
+      <NaturalPhoto
+        key={i}
+        photo={photo}
+        fallbackRatio={2 / 3}
+        sizes="(max-width: 760px) 50vw, 300px"
+        className="max-md:basis-[calc(50%-8px)] max-md:!grow-0 md:basis-0"
+      />
+    )),
+  ];
+  if (flipped) photos.reverse();
 
   return (
     <article className="flex flex-col gap-6">
@@ -46,19 +54,7 @@ export function EventBlock({ event, index }: { event: EventView; index: number }
           {event.summary}
         </p>
       )}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] gap-4">
-        {flipped ? (
-          <>
-            {pair}
-            {lead}
-          </>
-        ) : (
-          <>
-            {lead}
-            {pair}
-          </>
-        )}
-      </div>
+      <div className="flex flex-wrap items-start gap-4 md:flex-nowrap">{photos}</div>
     </article>
   );
 }

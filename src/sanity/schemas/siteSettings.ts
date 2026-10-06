@@ -11,7 +11,7 @@ export default defineType({
       name: "areaLine",
       title: "Area line",
       type: "string",
-      description: "Under the email in the enquiry section, e.g. 'Hertfordshire · London & the Home Counties'.",
+      description: "Under the email in the enquiry section, e.g. 'Hertfordshire · London'.",
     }),
     defineField({
       name: "footerAreas",

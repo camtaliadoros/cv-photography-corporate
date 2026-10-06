@@ -60,3 +60,38 @@ export function Frame({ photo, sizes, aspect, priority, className = "" }: FrameP
     </div>
   );
 }
+
+/** Width / height of a photograph, or `fallback` when its dimensions are unknown. */
+export function photoRatio(photo: AnyPhoto, fallback: number) {
+  if (photo && "dimensions" in photo && photo.dimensions?.aspectRatio) {
+    return photo.dimensions.aspectRatio;
+  }
+  return fallback;
+}
+
+/**
+ * A photograph shown whole. The box takes the photo's own ratio, so nothing is
+ * cropped, and `flex-grow` proportional to that ratio lets neighbours in a row
+ * share one height.
+ */
+export function NaturalPhoto({
+  photo,
+  sizes,
+  fallbackRatio,
+  className = "",
+}: {
+  photo: AnyPhoto;
+  sizes: string;
+  fallbackRatio: number;
+  className?: string;
+}) {
+  const ratio = photoRatio(photo, fallbackRatio);
+  return (
+    <div
+      className={`relative min-w-0 overflow-hidden bg-frame ${className}`}
+      style={{ aspectRatio: ratio, flexGrow: ratio }}
+    >
+      <FillPhoto photo={photo} sizes={sizes} />
+    </div>
+  );
+}

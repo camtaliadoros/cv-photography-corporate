@@ -198,7 +198,7 @@ function escapeHtml(value: string): string {
 
 const CONFIRMATION_LINES = [
   "Thanks for getting in touch about your event. Your enquiry has reached me.",
-  "I'll come back within one working day with availability and a quote. If anything's changed in the meantime, just reply to this email.",
+  "I'll come back with availability and a quote. If anything's changed in the meantime, just reply to this email.",
 ];
 
 function confirmationHtml(firstName: string): string {

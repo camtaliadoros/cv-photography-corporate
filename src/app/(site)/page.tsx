@@ -9,7 +9,7 @@ import { homePageQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import type { EventDoc, HomePage, SiteSettings } from "@/sanity/lib/types";
 import { heroFallbackPhoto, homeContent as fb, settingsContent, type FallbackEvent } from "@/lib/content";
-import { toParagraphs, toPlainText } from "@/lib/text";
+import { splitLeadSentence, toParagraphs, toPlainText } from "@/lib/text";
 import { site } from "@/lib/site";
 
 const shell = "mx-auto max-w-[1280px] px-(--gutter) py-(--section)";
@@ -55,12 +55,6 @@ export default async function HomePageRoute() {
   const events = (
     page?.work?.events?.filter(Boolean).length ? page.work.events.filter(Boolean) : fb.work.events
   ).map(toEventView);
-
-  const testimonial = {
-    eyebrow: page?.testimonial?.eyebrow || fb.testimonial.eyebrow,
-    quote: toPlainText(page?.testimonial?.quote) || fb.testimonial.quote,
-    attribution: page?.testimonial?.attribution || fb.testimonial.attribution,
-  };
 
   const about = {
     eyebrow: page?.about?.eyebrow || fb.about.eyebrow,
@@ -149,11 +143,16 @@ export default async function HomePageRoute() {
             <h2 className={h2}>{whatIDo.heading}</h2>
           </div>
           <div className="flex flex-col gap-6">
-            {whatIDo.body.map((p, i) => (
-              <p key={i} className={`${prose} text-[19px]`}>
-                {p}
-              </p>
-            ))}
+            {whatIDo.body.map((p, i) => {
+              const { lead, rest } = splitLeadSentence(p);
+              return (
+                <p key={i} className={`${prose} text-[19px]`}>
+                  {lead && <strong className="font-semibold text-ink">{lead}</strong>}
+                  {lead && " "}
+                  {rest}
+                </p>
+              );
+            })}
             <ul className="m-0 flex list-none flex-wrap gap-x-7 gap-y-3.5 p-0 pt-2.5">
               {whatIDo.services.map((s) => (
                 <li
@@ -169,7 +168,7 @@ export default async function HomePageRoute() {
       </section>
 
       {/* Selected work */}
-      <section id="work">
+      <section id="work" className="bg-frame">
         <div className={`${shell} flex flex-col gap-[clamp(56px,7vw,104px)]`}>
           <div className="flex max-w-[680px] flex-col gap-[22px]">
             <Eyebrow>{page?.work?.eyebrow || fb.work.eyebrow}</Eyebrow>
@@ -178,43 +177,6 @@ export default async function HomePageRoute() {
           {events.map((event, i) => (
             <EventBlock key={i} event={event} index={i} />
           ))}
-        </div>
-      </section>
-
-      {/* Testimonial */}
-      <section id="testimonial" className="bg-ink text-paper">
-        <div className={`${shell} grid grid-cols-[minmax(40px,120px)_minmax(0,1fr)] gap-[clamp(20px,4vw,56px)]`}>
-          <span aria-hidden className="mt-[7px] h-px bg-brass" />
-          <figure className="m-0 flex max-w-[900px] flex-col gap-7">
-            <Eyebrow tone="brass">{testimonial.eyebrow}</Eyebrow>
-            <blockquote className="m-0 font-serif text-[clamp(26px,3vw,42px)] leading-[1.38] font-light text-paper italic text-pretty">
-              {testimonial.quote}
-            </blockquote>
-            <figcaption>
-              <Eyebrow tone="brass">{testimonial.attribution}</Eyebrow>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="about" className="border-b border-rule">
-        <div className={`${shell} grid grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] items-center gap-[clamp(40px,6vw,96px)]`}>
-          <Frame
-            photo={page?.about?.portrait}
-            aspect="aspect-[4/5]"
-            sizes="(max-width: 760px) 100vw, 480px"
-            className="w-full max-w-[480px]"
-          />
-          <div className="flex flex-col gap-6">
-            <Eyebrow>{about.eyebrow}</Eyebrow>
-            <h2 className={h2}>{about.heading}</h2>
-            {about.body.map((p, i) => (
-              <p key={i} className={prose}>
-                {p}
-              </p>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -265,6 +227,27 @@ export default async function HomePageRoute() {
               </div>
             ))}
           </dl>
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about">
+        <div className={`${shell} grid grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] items-center gap-[clamp(40px,6vw,96px)]`}>
+          <Frame
+            photo={page?.about?.portrait}
+            aspect="aspect-[4/5]"
+            sizes="(max-width: 760px) 100vw, 480px"
+            className="w-full max-w-[480px]"
+          />
+          <div className="flex flex-col gap-6">
+            <Eyebrow>{about.eyebrow}</Eyebrow>
+            <h2 className={h2}>{about.heading}</h2>
+            {about.body.map((p, i) => (
+              <p key={i} className={prose}>
+                {p}
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 

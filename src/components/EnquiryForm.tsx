@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const label = "text-[10px] tracking-[0.24em] text-ink uppercase";
+// The visible title is the placeholder; the label stays for screen readers.
+const label = "sr-only";
 const field =
-  "appearance-none rounded-none border-0 border-b border-ink bg-transparent py-2.5 font-serif text-lg font-light text-ink outline-none transition-colors focus:border-vermilion";
+  "appearance-none rounded-none border-0 border-b border-ink bg-transparent py-2.5 font-serif text-lg font-light text-ink placeholder:text-muted outline-none transition-colors focus:border-vermilion";
 
 export function EnquiryForm({
   email,
@@ -54,7 +55,7 @@ export function EnquiryForm({
       <div className="flex flex-wrap gap-[30px]">
         <label className="flex flex-[1_1_220px] flex-col gap-2.5">
           <span className={label}>Name</span>
-          <input name="name" required autoComplete="name" placeholder="Alex Smith" className={field} />
+          <input name="name" required autoComplete="name" placeholder="Name" className={field} />
         </label>
         <label className="flex flex-[1_1_220px] flex-col gap-2.5">
           <span className={label}>Company</span>
@@ -62,7 +63,7 @@ export function EnquiryForm({
             name="company"
             required
             autoComplete="organization"
-            placeholder="Acme Ltd"
+            placeholder="Company"
             className={field}
           />
         </label>
@@ -74,20 +75,20 @@ export function EnquiryForm({
           type="email"
           required
           autoComplete="email"
-          placeholder="alex@acme.com"
+          placeholder="Email address"
           className={field}
         />
       </label>
       <label className="flex flex-col gap-2.5">
         <span className={label}>Date &amp; location</span>
-        <input name="when" placeholder="12 November, Shoreditch" className={field} />
+        <input name="when" placeholder="Date & location" className={field} />
       </label>
       <label className="flex flex-col gap-2.5">
-        <span className={label}>About the event</span>
+        <span className={label}>Tell me a bit about the event</span>
         <textarea
           name="message"
           rows={3}
-          placeholder="What's happening, roughly how many people, and the hours you need covered"
+          placeholder="Tell me a bit about the event"
           className={`${field} resize-y leading-normal`}
         />
       </label>

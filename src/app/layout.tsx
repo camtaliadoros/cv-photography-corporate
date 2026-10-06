@@ -17,10 +17,10 @@ const lora = Lora({
   display: "swap",
 });
 
-// Source Serif 4 Light carries the body copy, roman and italic.
+// Source Serif 4 Light carries the body copy, roman and italic; 600 bolds lead-in sentences.
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  weight: ["300"],
+  weight: ["300", "600"],
   style: ["normal", "italic"],
   variable: "--font-source-serif",
   display: "swap",

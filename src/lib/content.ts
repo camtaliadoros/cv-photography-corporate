@@ -22,7 +22,7 @@ export const heroFallbackPhoto: FallbackPhoto = {
 
 export const settingsContent = {
   contactEmail: "hello@camvelucci.com",
-  areaLine: "Hertfordshire · London & the Home Counties",
+  areaLine: "Hertfordshire · London",
   footerAreas: "London · Hertfordshire",
   familySiteUrl: "https://www.camvelucci.com",
   familySiteLabel: "Family & portrait work",
@@ -104,7 +104,7 @@ export const homeContent = {
     ],
   },
   details: {
-    eyebrow: "Practical details",
+    eyebrow: "Practical bits",
     priceLead: "Coverage from",
     price: "£350",
     priceNote: "For up to 2 hours of coverage. Longer events quoted on request.",
@@ -129,9 +129,9 @@ export const homeContent = {
     eyebrow: "Enquire",
     heading: "Tell me about the event",
     intro:
-      "Date, location and roughly what's happening is enough to start. I'll come back within one working day with availability and a quote.",
+      "Date, location and roughly what's happening is enough to start. I'll come back with availability and a quote.",
     successHeading: "Thanks, that's with me",
     successBody:
-      "I'll come back within one working day with availability and a quote. If it's urgent, email me directly.",
+      "I'll come back with availability and a quote. If it's urgent, email me directly.",
   },
 };

@@ -50,7 +50,7 @@ export default defineType({
       paragraphs(),
       photo("portrait", "Portrait", false),
     ]),
-    group("details", "Practical details", [
+    group("details", "Practical bits", [
       eyebrow(),
       defineField({ name: "priceLead", title: "Price lead-in", type: "string", description: "e.g. 'Coverage from'" }),
       defineField({ name: "price", title: "Price", type: "string", description: "e.g. '£350'" }),
