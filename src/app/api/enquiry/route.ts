@@ -212,7 +212,7 @@ function confirmationHtml(firstName: string): string {
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px; background-color:#ffffff; border:1px solid #d9d3c8;">
         <tr><td style="background-color:#111111; padding:32px 36px;">
-          <img src="https://corporate.camvelucci.com/email-logo.png" alt="Cam Velucci Photography" width="200" style="display:block; width:200px; height:auto;">
+          <img src="https://velucciphotography.com/email-logo.png" alt="Cam Velucci Photography" width="200" style="display:block; width:200px; height:auto;">
         </td></tr>
         <tr><td style="padding:40px 36px 20px;">
           ${p(`Hi ${escapeHtml(firstName)},`)}

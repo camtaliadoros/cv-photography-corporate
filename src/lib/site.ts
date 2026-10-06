@@ -1,6 +1,6 @@
 export const site = {
   name: "Cam Velucci Photography",
-  url: "https://corporate.camvelucci.com",
+  url: "https://velucciphotography.com",
   email: "hello@camvelucci.com",
   familySiteUrl: "https://www.camvelucci.com",
   region: "Hertfordshire",

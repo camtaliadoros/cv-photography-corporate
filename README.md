@@ -1,6 +1,6 @@
 # Cam Velucci — corporate event photography
 
-The corporate site at corporate.camvelucci.com. Next.js 16 (App Router),
+The corporate site at velucciphotography.com. Next.js 16 (App Router),
 Sanity with the Studio embedded at `/studio`, Tailwind 4, deployed on Netlify.
 Built from the Claude Design export *Corporate Landing Page v3*.
 
@@ -43,7 +43,7 @@ About → Portrait**.
 - Replace the testimonial's placeholder attribution ("Organiser name").
 - Set the env vars above in Netlify.
 - Once the domain resolves, add a Sanity webhook (project → API → Webhooks):
-  POST to `https://corporate.camvelucci.com/api/revalidate`, filter
+  POST to `https://velucciphotography.com/api/revalidate`, filter
   `_type in ["homePage","siteSettings","event"]`, projection `{_type}`, with
   `SANITY_REVALIDATE_SECRET` as the secret. Without it, edits appear within
   the hour instead of on the next visit.
