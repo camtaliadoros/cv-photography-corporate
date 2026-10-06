@@ -6,6 +6,7 @@ import { EnquiryForm } from "@/components/EnquiryForm";
 import { FillPhoto, Frame } from "@/components/Photo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { homePageQuery, siteSettingsQuery } from "@/sanity/lib/queries";
+import { HeroParallax } from "@/components/HeroParallax";
 import { urlFor } from "@/sanity/lib/image";
 import type { EventDoc, HomePage, SiteSettings } from "@/sanity/lib/types";
 import { heroFallbackPhoto, homeContent as fb, settingsContent, type FallbackEvent } from "@/lib/content";
@@ -112,7 +113,9 @@ export default async function HomePageRoute() {
         id="top"
         className="relative flex min-h-[clamp(620px,100vh,920px)] flex-col justify-between overflow-hidden bg-ink"
       >
-        <FillPhoto photo={heroImage} sizes="100vw" priority className="object-cover" />
+        <HeroParallax>
+          <FillPhoto photo={heroImage} sizes="100vw" priority className="object-cover" />
+        </HeroParallax>
         <div
           aria-hidden
           className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.6)_0%,rgba(17,17,17,0.08)_28%,rgba(17,17,17,0.3)_58%,rgba(17,17,17,0.92)_100%)]"
