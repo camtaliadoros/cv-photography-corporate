@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Header } from "@/components/Header";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
@@ -35,6 +36,10 @@ export default async function PrivacyPage() {
             This policy explains how <strong>Cam Velucci Photography</strong> (&ldquo;I&rdquo;,
             &ldquo;me&rdquo;) handles the information you send through this website. I am the
             data controller for it. Questions go to {mail}.
+          </p>
+          <p>
+            If you&rsquo;ve booked me or attended an event I covered, see my{" "}
+            <Link href="/event-privacy">event privacy notice</Link>.
           </p>
 
           <h2>What I collect</h2>
